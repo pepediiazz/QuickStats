@@ -1,0 +1,13 @@
+{
+  "routes": [
+    "/",
+    "/balonmano",
+    "/baseball",
+    "/basketball",
+    "/football",
+    "/hockey",
+    "/landing",
+    "/rugby",
+    "/volleyball"
+  ]
+}
