@@ -1,16 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
-import { NewsService } from '../../../services/sports-news.service'; // Ajusta la ruta según sea necesario
-import { Article } from '../../../interfaces/news-response.interface'; // Ajusta la ruta según sea necesario
+import { HttpClient } from '@angular/common/http';
 import { trigger, style, animate, transition } from '@angular/animations';
+
+interface Article {
+  title: string;
+  url: string;
+  urlToImage: string;
+}
 
 @Component({
   selector: 'app-rugby-news',
   templateUrl: './rugby-news.component.html',
   styleUrls: ['./rugby-news.component.css'],
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule],
   animations: [
     trigger('newsAnimation', [
       transition(':enter', [
@@ -30,24 +34,19 @@ export class RugbyNewsComponent implements OnInit {
   loading = true;
   private currentIndex = 0;
 
-  constructor(private newsService: NewsService) {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.fetchNews('rugby');
+    this.fetchNews();
   }
 
-  fetchNews(category: string): void {
-    this.newsService.getNewsByCategory(category).subscribe(data => {
-      this.articles = data.filter(article => this.isValidArticle(article));
-      this.displayedArticles = this.articles.slice(0, 3);
-      this.loading = false;
-    });
-  }
-
-  isValidArticle(article: Article): boolean {
-    const invalidKeywords = ['PESTAÑA', 'COMPONENTE', 'REMOVED'];
-    const regex = new RegExp(invalidKeywords.join('|'), 'i');
-    return !regex.test(article.title) && !regex.test(article.description);
+  fetchNews(): void {
+    this.http.get<any>('https://newsapi.org/v2/everything?q=rugby&language=es&apiKey=e7493892f4d24c76a5c8357e62c27c5c')
+      .subscribe(data => {
+        this.articles = data.articles.filter((article: any) => article.title && article.urlToImage && !article.title.includes('REMOVED'));
+        this.displayedArticles = this.articles.slice(0, 3);
+        this.loading = false;
+      });
   }
 
   loadMoreNews(): void {

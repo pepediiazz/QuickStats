@@ -1,15 +1,33 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
-import { NewsService } from '../../../services/sports-news.service'; // Ajusta la ruta según sea necesario
-import { Article } from '../../../interfaces/news-response.interface'; // Ajusta la ruta según sea necesario
+import { HttpClient } from '@angular/common/http';
+import { trigger, style, animate, transition } from '@angular/animations';
+
+interface Article {
+  title: string;
+  description: string;
+  url: string;
+  urlToImage: string;
+}
 
 @Component({
   selector: 'app-football-news',
   templateUrl: './football-news.component.html',
   styleUrls: ['./football-news.component.css'],
   standalone: true,
-  imports: [CommonModule, HttpClientModule]  // Asegúrate de importar CommonModule y HttpClientModule
+  imports: [CommonModule],
+  animations: [
+    trigger('newsAnimation', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(-20px)' }),
+        animate('500ms ease-out', style({ opacity: 1, transform: 'translateY(0)' })),
+      ]),
+      transition(':leave', [
+        style({ opacity: 1, transform: 'translateY(0)' }),
+        animate('500ms ease-in', style({ opacity: 0, transform: 'translateY(20px)' })),
+      ]),
+    ]),
+  ],
 })
 export class FootballNewsComponent implements OnInit {
   articles: Article[] = [];
@@ -17,18 +35,19 @@ export class FootballNewsComponent implements OnInit {
   loading = true;
   private currentIndex = 0;
 
-  constructor(private newsService: NewsService) {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.fetchNews('futbol');
+    this.fetchNews();
   }
 
-  fetchNews(category: string): void {
-    this.newsService.getNewsByCategory(category).subscribe(data => {
-      this.articles = data.filter(article => this.isValidArticle(article));
-      this.displayedArticles = this.articles.slice(0, 3);
-      this.loading = false;
-    });
+  fetchNews(): void {
+    this.http.get<any>('https://newsapi.org/v2/everything?q=futbol&language=es&apiKey=e7493892f4d24c76a5c8357e62c27c5c')
+      .subscribe(data => {
+        this.articles = data.articles.filter((article: Article) => this.isValidArticle(article));
+        this.displayedArticles = this.articles.slice(0, 3);
+        this.loading = false;
+      });
   }
 
   isValidArticle(article: Article): boolean {
