@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 # QuickStats
 =======
 # Proyecto
@@ -33,3 +34,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 =======
 # QuickStats
 >>>>>>> b9e404ccde7f5b22688a13dda0439a871860fa20
+=======
+# QuickStats
+>>>>>>> 0b6ee53f0d01ac5c7f07c267ba7dfee5baf9cd1c
