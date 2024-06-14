@@ -1,0 +1,59 @@
+<header>
+  <div class="top">
+  </div>
+  <div class="down">
+    <div class="logo-categorias_noticias">
+      <div class="logo-categorias">
+        <div style="display: flex;">
+          <div class="logo">
+            <a class="logo-enlace" routerLink="/football">
+              <img src="/assets/images/Quick.png" class="logo-enlace-foto" alt="Nombre del logo">
+            </a>
+          </div>
+          <div class="categorias">
+            <div class="categoria">
+              <a class="categoria-link" routerLink="/football">
+                <div class="categoria-link-link "></div>
+              </a>
+              <a class="categoria-link" routerLink="/basketball">
+                <div class="categoria-link-link"></div>
+              </a>
+              <a class="categoria-link" routerLink="/rugby">
+                <div class="categoria-link-link"></div>
+              </a>
+              <a class="categoria-link" routerLink="/baseball">
+                <div class="categoria-link-link activo"></div>
+              </a>
+              <a class="categoria-link" routerLink="/hockey">
+                <div class="categoria-link-link"></div>
+              </a>
+              <a class="categoria-link" routerLink="/balonmano">
+                <div class="categoria-link-link"></div>
+              </a>
+              <a class="categoria-link" routerLink="/volleyball">
+                <div class="categoria-link-link"></div>
+              </a>
+              <div class="categoria-link" id="puntos" #puntos (click)="toggleMenuDeportes($event)">
+                <div class="categoria-link-link"></div>
+                <div class="menu-deportes" #menuDeportes>
+                  <ul>
+                    <li><div class="categoria-link-link"> </div></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="favoritos">
+        <div class="categoria">
+          <a class="categoria-link" (click)="toggleFavorites()">
+            <div class="categoria-link-link" id="favoritos_img" (mouseover)="cambiarImagenFavorito()" (mouseout)="restaurarImagenFavorito()">
+              <span class="texto-favoritos"></span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
